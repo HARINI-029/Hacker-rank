@@ -1,0 +1,20 @@
+Find First Occurrence
+Given a sorted array of integers that may contain duplicates, return the index of the first occurrence of a target value or -1 if not found.
+
+
+int findFirstOccurrence(int nums_count, int* nums, int target) {
+    int res = -1;
+    for (int i =0;i<nums_count;i++)
+    {
+        
+    
+if ( target ==nums[i] )
+{
+    res = i ;
+    break;
+}
+
+
+}
+return res;
+}
