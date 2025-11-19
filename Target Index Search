@@ -1,0 +1,14 @@
+int binarySearch(int nums_count, int* nums, int target) {
+    
+    int res = -1;
+    for (int i =0;i<nums_count;i++)
+    {
+        if (nums[i]==target)
+        {
+            return i ;
+            break;
+        }
+    }
+    return res;
+
+}
