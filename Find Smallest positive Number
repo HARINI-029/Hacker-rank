@@ -1,0 +1,27 @@
+int findSmallestMissingPositive(int orderNumbers_count, int* orderNumbers) {
+  int i =0;
+  while (i <orderNumbers_count)
+  {
+    int correct_pos = orderNumbers[i] - 1;
+    
+    if (orderNumbers[i]>0 && orderNumbers[i]<= orderNumbers_count && orderNumbers[i]!= orderNumbers[correct_pos])
+    {
+      int temp = orderNumbers[i];
+      orderNumbers[i] = orderNumbers[correct_pos];
+      orderNumbers[correct_pos] = temp;  
+    } 
+    else {
+    i ++;
+    }
+  }
+  int res = 0;
+  
+  for (int i =0;i<orderNumbers_count;i++)
+  {
+    if (orderNumbers[i] != i + 1)
+    {
+        return i + 1;
+    }
+  }
+  return orderNumbers_count + 1;
+}
