@@ -1,0 +1,40 @@
+int countAffordablePairs(int prices_count, int* prices, int budget) {
+int count = 0;
+for (int i =0;i<prices_count;i++)
+{
+    for (int j = i+ 1 ; j<prices_count;j++)
+    {
+    if (prices[i] + prices[j]<= budget)
+    {
+        count ++;
+    }
+   
+    }
+}
+return count;
+}
+
+
+OPTIMIZED SOLUTION:
+
+
+int countAffordablePairs(int prices_count, int* prices, int budget) {
+int count = 0, i = 0 , j = prices_count - 1;
+
+while (i <j)
+{
+    if (prices[i] + prices[j]<=budget)
+    {
+        count = count + (j - i);
+        i ++;
+    }
+    else {
+    j++;
+    }
+}
+return count;
+
+
+}
+
+
