@@ -1,0 +1,25 @@
+//Check Palindrome by Filtering Only Vowels
+bool palindrome_vowel(char * code)
+{
+int start = 0;
+int end = strlen(code) - 1;
+while (start<end)
+{
+if (code[start] != 'a' || code[start] != "e" || code[start] != "i"|| code[start] !="o" ||code[start] != "u")
+{
+start ++;
+continue;
+}
+if (code[end] != 'a' || code[end] != "e" || code[end] != "i"|| code[end] !="o" ||code[end] != "u")
+{
+end --;
+continue;
+}
+
+if (code[start] != code[end])
+{
+return 0;
+}
+}
+return 1;
+}
