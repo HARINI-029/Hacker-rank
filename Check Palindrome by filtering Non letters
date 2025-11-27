@@ -1,0 +1,26 @@
+// String palindrome:
+
+
+bool isAlphabeticPalindrome(char* code) { 
+   int start = 0, end = strlen (code) - 1;
+   while (start<end)
+   {
+    if (!isalpha(code[start]))
+    {
+        start++;
+        continue;   
+    }
+    if (!isalpha(code[end]))
+    {
+        end --;
+        continue;
+    }
+    if (code[start]!=code[end])
+    {
+        return 0;
+    }
+    start++;
+    end--;
+   }
+   return 1;
+}
