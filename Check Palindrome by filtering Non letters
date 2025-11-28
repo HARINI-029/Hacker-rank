@@ -1,6 +1,3 @@
-// String palindrome:
-
-
 bool isAlphabeticPalindrome(char* code) { 
    int start = 0, end = strlen (code) - 1;
    while (start<end)
@@ -15,10 +12,10 @@ bool isAlphabeticPalindrome(char* code) {
         end --;
         continue;
     }
-    if (code[start]!=code[end])
-    {
-        return 0;
-    }
+   if (tolower(code[start]) != tolower(code[end])) {
+            return false;
+        }
+
     start++;
     end--;
    }
