@@ -11,12 +11,8 @@ void initialise_Node(Node **head, int *count) {
     *count = 0;
 }
 
-/* INSERTION FUNCTIONS */
-
 void insert_At_start(Node **head, int *count, int data) {
     Node *new_node = (Node*)malloc(sizeof(Node));
-    if (new_node == NULL) return;
-
     new_node->data = data;
     new_node->next = *head;
     *head = new_node;
@@ -28,10 +24,7 @@ void insert_At_end(Node **head, int *count, int data) {
         insert_At_start(head, count, data);
         return;
     }
-
     Node *new_node = (Node*)malloc(sizeof(Node));
-    if (!new_node) return;
-
     new_node->data = data;
     new_node->next = NULL;
 
@@ -53,8 +46,6 @@ void insert_At_pos(Node **head, int *count, int data, int pos) {
     }
 
     Node *new_node = (Node*)malloc(sizeof(Node));
-    if (!new_node) return;
-
     new_node->data = data;
 
     Node *temp = *head;
@@ -68,23 +59,23 @@ void insert_At_pos(Node **head, int *count, int data, int pos) {
 
 void insert_after_key(Node **head, int *count, int data, int key) {
     Node *temp = *head;
-    while (temp && temp->data != key)
+
+    while (temp != NULL && temp->data != key)
         temp = temp->next;
 
-    if (!temp) return;
+    if (temp == NULL)
+        return;
 
     Node *new_node = (Node*)malloc(sizeof(Node));
-    if (!new_node) return;
-
     new_node->data = data;
     new_node->next = temp->next;
     temp->next = new_node;
-
     (*count)++;
 }
 
 void insert_before_key(Node **head, int *count, int data, int key) {
-    if (*head == NULL) return;
+    if (*head == NULL)
+        return;
 
     if ((*head)->data == key) {
         insert_At_start(head, count, data);
@@ -94,26 +85,26 @@ void insert_before_key(Node **head, int *count, int data, int key) {
     Node *prev = *head;
     Node *cur = (*head)->next;
 
-    while (cur && cur->data != key) {
+    while (cur != NULL && cur->data != key) {
         prev = cur;
         cur = cur->next;
     }
 
-    if (!cur) return;
+    if (cur == NULL)
+        return;
 
-    Node *new_node = malloc(sizeof(Node));
+    Node *new_node = (Node*)malloc(sizeof(Node));
     new_node->data = data;
-
     new_node->next = cur;
     prev->next = new_node;
-
     (*count)++;
 }
 
 /* DELETE FUNCTIONS */
 
 void delete_At_beginning(Node **head, int *count) {
-    if (!*head) return;
+    if (*head == NULL)
+        return;
 
     Node *temp = *head;
     *head = temp->next;
@@ -122,7 +113,8 @@ void delete_At_beginning(Node **head, int *count) {
 }
 
 void delete_at_end(Node **head, int *count) {
-    if (!*head) return;
+    if (*head == NULL)
+        return;
 
     if ((*head)->next == NULL) {
         delete_At_beginning(head, count);
@@ -130,6 +122,7 @@ void delete_at_end(Node **head, int *count) {
     }
 
     Node *temp = *head;
+
     while (temp->next->next != NULL)
         temp = temp->next;
 
@@ -139,7 +132,8 @@ void delete_at_end(Node **head, int *count) {
 }
 
 void delete_at_pos(Node **head, int *count, int pos) {
-    if (pos < 1 || pos > *count) return;
+    if (pos < 1 || pos > *count)
+        return;
 
     if (pos == 1) {
         delete_At_beginning(head, count);
@@ -149,7 +143,7 @@ void delete_at_pos(Node **head, int *count, int pos) {
     Node *prev = *head;
     Node *cur = (*head)->next;
 
-    for (int i = 2; i < pos; i++) {
+    for (int i = 1; i < pos - 1; i++) {
         prev = cur;
         cur = cur->next;
     }
@@ -162,15 +156,15 @@ void delete_at_pos(Node **head, int *count, int pos) {
 void delete_after_key(Node **head, int *count, int key) {
     Node *temp = *head;
 
-    while (temp && temp->data != key)
+    while (temp != NULL && temp->data != key)
         temp = temp->next;
 
-    if (!temp || !temp->next) return;
+    if (temp == NULL || temp->next == NULL)
+        return;
 
     Node *del = temp->next;
     temp->next = del->next;
     free(del);
-
     (*count)--;
 }
 
@@ -178,35 +172,34 @@ void delete_before_key(Node **head, int *count, int key) {
     if (*head == NULL || (*head)->data == key)
         return;
 
-    if ((*head)->next && (*head)->next->data == key) {
-        delete_At_beginning(head, count);
+    if ((*head)->next != NULL && (*head)->next->data == key) {
+        Node *temp = *head;
+        *head = (*head)->next;
+        free(temp);
+        (*count)--;
         return;
     }
 
     Node *prev = *head;
     Node *cur = (*head)->next;
 
-    while (cur->next && cur->next->data != key) {
+    while (cur->next != NULL && cur->next->data != key) {
         prev = cur;
         cur = cur->next;
     }
 
-    if (!cur->next) return;
+    if (cur->next == NULL)
+        return;
 
     prev->next = cur->next;
     free(cur);
     (*count)--;
 }
 
-void display(Node *head) {
-    if (!head) {
-        printf("List is empty\n");
-        return;
-    }
-
-    Node *temp = head;
-    printf("Linked List: ");
-    while (temp) {
+void display(Node **head) {
+    Node *temp = *head;
+    printf("List: ");
+    while (temp != NULL) {
         printf("%d -> ", temp->data);
         temp = temp->next;
     }
@@ -218,12 +211,12 @@ void display(Node *head) {
 int main() {
     Node *head;
     int count;
-    initialise_Node(&head, &count);
-
     int choice, data, pos, key;
 
+    initialise_Node(&head, &count);
+
     while (1) {
-        printf("\n--- MENU ---\n");
+        printf("\n--- LINKED LIST MENU ---\n");
         printf("1. Insert at beginning\n");
         printf("2. Insert at end\n");
         printf("3. Insert at position\n");
@@ -234,14 +227,13 @@ int main() {
         printf("8. Delete at position\n");
         printf("9. Delete before key\n");
         printf("10. Delete after key\n");
-        printf("11. Display\n");
+        printf("11. Display nodes\n");
         printf("12. Exit\n");
 
         printf("Enter choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
-
             case 1:
                 printf("Enter value: ");
                 scanf("%d", &data);
@@ -305,7 +297,7 @@ int main() {
                 break;
 
             case 11:
-                display(head);
+                display(&head);
                 break;
 
             case 12:
@@ -315,6 +307,5 @@ int main() {
                 printf("Invalid choice!\n");
         }
     }
-
-    return 0;
 }
+
