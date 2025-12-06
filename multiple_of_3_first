@@ -1,0 +1,33 @@
+void multiple_of_3_first (int *arr,int n)
+{
+    int i =0,j=0;
+   int *a = (int*)malloc (n *sizeof(int));
+   
+   
+   for (int i =0;i<n;i++)
+   {
+       if ( arr[i] % 3 ==0)
+       {
+           a[j++] = arr[i];
+       }
+   }
+   
+   for (int i =0;i<n;i++)
+   {
+       if (arr[i] %3 !=0)
+       {
+           a[j++] = arr[i];
+       }
+   }
+    
+    for (int i =0;i<n;i++)
+    {
+        printf ("%d",a[i]);
+    }
+}
+
+
+void prime_no_first (int *a, int n)
+{
+    
+}
